@@ -35,29 +35,11 @@ public class UdpSocket : MonoBehaviour
     IPEndPoint remoteEndPoint;
     Thread receiveThread; // Receiving Thread
 
-   /* void Start() {
-        IEnumerator coro = ReceiveData();
-        client = new UdpClient(rxPort);
-        StartCoroutine(coro);
-    
-    }
-   */
-
-    //public void ReceiveDataStart() {
-        //StartCoroutine(ReceiveData());
-    //}
-
     void Update() // DELETE THIS: Added to show sending data from Unity to Python via UDP
     {
-            
-        SendData(gameObject.transform.position.ToString());
-        Debug.Log(gameObject.transform.position.ToString());
-        //SendData(gameObject.transform.rotation.eulerAngles.ToString());
-        //ReceiveData();
-        //i++;
-        //yield return new WaitForSeconds(1f);
-        //Debug.Log("Hellooo");
- 
+
+        SendData(gameObject.transform.rotation.eulerAngles.ToString());
+
     }
 
     public void SendData(string message) // Use to send data to Python
@@ -86,8 +68,8 @@ public class UdpSocket : MonoBehaviour
         receiveThread = new Thread(new ThreadStart(ReceiveData));
         receiveThread.IsBackground = true;
         receiveThread.Start();
-        
-        //ThreadPool.QueueUserWorkItem(o => ReceiveData());
+
+       
         // Initialize (seen in comments window)
         Debug.Log("UDP Comms Initialised");
 
@@ -102,24 +84,11 @@ public class UdpSocket : MonoBehaviour
              try
              {
                  IPEndPoint anyIP = new IPEndPoint(IPAddress.Parse(IP), rxPort);
-                /* byte[] data = client.Receive(ref anyIP);
+                 byte[] data = client.Receive(ref anyIP);
                  string text = Encoding.UTF8.GetString(data);
                  print(">> " + text);
-                 ProcessInput(text); */
-
-                // create an array to receive data from python code
-                byte[] data = new byte[1024];
-
-                socket_in.Receive(data);
-                int length = BitConverter.ToInt32(data, 0);
-
-                // Receive the image bytes
-                socket_in.Receive(data, length, SocketFlags.None);
-
-                // Decode the image bytes into a PNG image
-                Texture2D texture = new Texture2D(1, 1);
-                texture.LoadImage(data);
-            }
+                 ProcessInput(text);
+             }
              catch (Exception err)
              {
                  print(err.ToString());
@@ -127,27 +96,6 @@ public class UdpSocket : MonoBehaviour
          }
      }
     
-
-    /*IEnumerator ReceiveData()
-    {
-        while (true)
-        {
-            try
-            {
-                IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, rxPort);
-                byte[] data = client.Receive(ref anyIP); //changed to BeginReceive
-                string text = Encoding.UTF8.GetString(data);
-                Debug.Log(text);
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError(e);
-                break;
-            }
-            yield return null;
-        }
-    }
- */
     private void ProcessInput(string input)
     {
         // PROCESS INPUT RECEIVED STRING HERE
