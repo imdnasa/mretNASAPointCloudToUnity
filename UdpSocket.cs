@@ -37,8 +37,8 @@ public class UdpSocket : MonoBehaviour
 
     void Update() // DELETE THIS: Added to show sending data from Unity to Python via UDP
     {
-
-        SendData(gameObject.transform.rotation.eulerAngles.ToString());
+        // SendData(gameObject.transform.rotation.eulerAngles.ToString());
+        SendData(gameObject.transform.position.ToString());
 
     }
 

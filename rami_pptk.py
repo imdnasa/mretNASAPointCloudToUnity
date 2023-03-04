@@ -43,6 +43,8 @@ recv.bind((UDP_IP, UDP_PORT))
 
 timeout = 5
 readable, _, _ = select.select([recv], [], [], timeout)
+
+#print(v.get('eye'))
 while readable:
 
     if msvcrt.kbhit():
@@ -71,8 +73,12 @@ while readable:
         x, y, z = result[0]
         # Extract the values
         #print(f"X: {x}, Y: {y}, Z: {z}")
-        poses = [[float(x), float(y), float(z), 0, np.pi/4, 5]]
-        print(poses)
+        #if(rod < 5):
+        #    print(poses)
+        poses = [[float(x), float(y), float(z) + 48, 0, np.pi/4, 5]]
+        if (rod < 10):
+            print(poses)
+
         v.play(poses, 2 * np.arange(len(poses)), repeat=False, interp='linear')
         
         with open('./rec/img' + str(rod) + '.png', "w") as file:
