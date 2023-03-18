@@ -32,8 +32,6 @@ UDP_PORT = 8001
 UDP_PORT_SEND = 8000
 
 v = pptk.viewer(xyz, debug=True)
-print(len(n))
-print(len(rgb))
 v.attributes(rgb / 255., 0.5 * (1 + n))
 # attr1 = pptk.rand(100)     # 100 random scalars
 # attr2 = pptk.rand(100, 3)  # 100 random RGB colors
